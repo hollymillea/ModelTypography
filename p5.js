@@ -3,7 +3,7 @@
 let binaryPixels = [];
 
 function setup() {
-    createCanvas(windowWidth, windowHeight);
+    createCanvas(400, 400);
     noLoop();
 
     // Use the binaryData provided by Three.js

@@ -1,8 +1,11 @@
+const width = 400;
+const height = 400;
+
 // Initialize Three.js Scene, Camera, and Renderer
 const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+const camera = new THREE.PerspectiveCamera(75, width/height, 0.1, 1000);
 const renderer = new THREE.WebGLRenderer();
-renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.setSize(width, height);
 document.getElementById('threejs-container').appendChild(renderer.domElement);
 
 // Create a simple 3D model (a cube)
@@ -14,15 +17,13 @@ scene.add(cube);
 camera.position.z = 5;
 
 // Create a render target
-const renderTarget = new THREE.WebGLRenderTarget(window.innerWidth, window.innerHeight);
+const renderTarget = new THREE.WebGLRenderTarget(width, height);
 renderer.setRenderTarget(renderTarget);
 
 // Render the scene to the render target
 renderer.render(scene, camera);
 
 // Extract Pixel Data
-const width = window.innerWidth;
-const height = window.innerHeight;
 const pixelBuffer = new Uint8Array(4 * width * height);
 renderer.readRenderTargetPixels(renderTarget, 0, 0, width, height, pixelBuffer);
 
