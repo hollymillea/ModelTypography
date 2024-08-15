@@ -4,9 +4,7 @@ let binaryPixels = [];
 
 function setup() {
     createCanvas(1000, 1000);
-    // pixelDensity(1);
-    textAlign(CENTER, CENTER);
-    textSize(5);
+    // textAlign(CENTER, CENTER);
     noLoop();
 
     // Use the binaryData provided by Three.js

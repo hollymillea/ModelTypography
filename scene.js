@@ -3,7 +3,7 @@ const height = 200;
 
 // Initialize Three.js Scene, Camera, and Renderer
 const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(75, width/height, 0.1, 1000);
+const camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
 const renderer = new THREE.WebGLRenderer();
 renderer.setSize(width, height);
 document.getElementById('threejs-container').appendChild(renderer.domElement);
@@ -14,7 +14,20 @@ const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
 const cube = new THREE.Mesh(geometry, material);
 scene.add(cube);
 
-camera.position.z = 1.5;
+// Set initial camera position and rotation angle
+let cameraAngleX = 0;
+let cameraAngleY = 0;
+const radius = 1.5;
+
+// Update camera position based on rotation angles
+function updateCameraPosition() {
+    camera.position.x = radius * Math.sin(cameraAngleY) * Math.cos(cameraAngleX);
+    camera.position.y = radius * Math.sin(cameraAngleX);
+    camera.position.z = radius * Math.cos(cameraAngleY) * Math.cos(cameraAngleX);
+    camera.lookAt(scene.position);
+}
+
+updateCameraPosition();
 
 // Create a render target
 const renderTarget = new THREE.WebGLRenderTarget(width, height);
@@ -46,3 +59,30 @@ for (let y = 0; y < height; y++) {
     }
     window.binaryData.push(row);
 }
+
+// Handle camera rotation with arrow keys
+document.addEventListener('keydown', (event) => {
+    const step = 0.1; // Adjust rotation angle step size
+
+    switch (event.key) {
+        case 'ArrowUp':
+            cameraAngleX -= step;
+            break;
+        case 'ArrowDown':
+            cameraAngleX += step;
+            break;
+        case 'ArrowLeft':
+            cameraAngleY -= step;
+            break;
+        case 'ArrowRight':
+            cameraAngleY += step;
+            break;
+    }
+
+    // Limit the vertical rotation to avoid flipping the camera upside down
+    cameraAngleX = Math.max(-Math.PI / 2, Math.min(Math.PI / 2, cameraAngleX));
+
+    // Update the camera position and render the scene
+    updateCameraPosition();
+    renderer.render(scene, camera);
+});
