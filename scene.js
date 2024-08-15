@@ -1,5 +1,5 @@
-const width = 400;
-const height = 400;
+const width = 200;
+const height = 200;
 
 // Initialize Three.js Scene, Camera, and Renderer
 const scene = new THREE.Scene();
@@ -14,7 +14,7 @@ const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
 const cube = new THREE.Mesh(geometry, material);
 scene.add(cube);
 
-camera.position.z = 5;
+camera.position.z = 1.5;
 
 // Create a render target
 const renderTarget = new THREE.WebGLRenderTarget(width, height);
@@ -39,10 +39,10 @@ for (let y = 0; y < height; y++) {
     let row = [];
     for (let x = 0; x < width; x++) {
         const index = (y * width + x) * 4;
-        const alpha = pixelBuffer[index + 3]; // Alpha
+        const green = pixelBuffer[index + 1]; // Green channel
 
-        // Simple threshold: if alpha > 0, consider the pixel as part of the model
-        row.push(alpha > 0 ? 1 : 0);
+        // Simple threshold: if green > 0, consider the pixel as part of the model
+        row.push(green > 0 ? 1 : 0);
     }
     window.binaryData.push(row);
 }

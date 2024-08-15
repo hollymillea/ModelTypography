@@ -3,7 +3,7 @@
 let binaryPixels = [];
 
 function setup() {
-    createCanvas(400, 400);
+    createCanvas(200, 200);
     noLoop();
 
     // Use the binaryData provided by Three.js
@@ -19,13 +19,15 @@ function setup() {
 }
 
 function draw() {
-    background(255);
+    background(150);
 
     // Define pixel size
-    let pixelSize = 10;
-    for (let i = 0; i < binaryPixels.length; i++) {
-        for (let j = 0; j < binaryPixels[i].length; j++) {
-            fill(binaryPixels[i][j] === 1 ? 0 : 255);
+    let pixelSize = 1;
+    for (let i = 0; i < binaryPixels.length; i+=5) {
+        for (let j = 0; j < binaryPixels[i].length; j+=5) {
+            const col = binaryPixels[i][j] === 1 ? 0 : 255
+            stroke(col);
+            fill(col);
             rect(j * pixelSize, i * pixelSize, pixelSize, pixelSize);
         }
     }
